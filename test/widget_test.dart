@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:sm_task_project/presentations/view/splash_screen/splash_screen.dart';
 
 void main() {
   testWidgets('SplashScreen displays the splash image', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      GetMaterialApp(
         home: SplashScreen(),
       ),
     );

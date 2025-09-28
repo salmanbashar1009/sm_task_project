@@ -10,7 +10,6 @@ class AppRoutes {
     GetPage(
       name: RouteNames.splashScreen,
       page: () => SplashScreen(),
-      transition: Transition.fade, // optional animation
     ),
     GetPage(
       name: RouteNames.postScreen,
