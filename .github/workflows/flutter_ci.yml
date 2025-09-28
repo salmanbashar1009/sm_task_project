@@ -11,14 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.35.3'
-
 
       - name: Install dependencies
         run: flutter pub get
@@ -29,11 +34,25 @@ jobs:
       - name: Run Tests
         run: flutter test
 
+      - name: Decode Android Keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > android/app/keystore.jks
+
       - name: Build Android APK
-        run: flutter build apk --release
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: flutter build apk --release --keystore-path android/app/keystore.jks --keystore-password $KEYSTORE_PASSWORD --keystore-key-alias $KEY_ALIAS --key-password $KEY_PASSWORD
 
       - name: Build Android App Bundle
-        run: flutter build appbundle --release
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: flutter build appbundle --release --keystore-path android/app/keystore.jks --keystore-password $KEYSTORE_PASSWORD --keystore-key-alias $KEY_ALIAS --key-password $KEY_PASSWORD
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -51,7 +70,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -62,11 +81,25 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Setup Code Signing
+        env:
+          IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
+          IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+          IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+        run: |
+          echo $IOS_CERTIFICATE_BASE64 | base64 --decode > ios_certificate.p12
+          echo $IOS_PROVISIONING_PROFILE_BASE64 | base64 --decode > ios_profile.mobileprovision
+          security create-keychain -p "" build.keychain
+          security import ios_certificate.p12 -t agg -k build.keychain -P $IOS_CERTIFICATE_PASSWORD -A
+          security set-keychain-settings -t 3600 -l build.keychain
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp ios_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+
       - name: Build iOS IPA
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release
 
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ios-release-build
-          path: build/ios/iphoneos
+          path: build/ios/ipa
