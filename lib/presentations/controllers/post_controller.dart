@@ -1,39 +1,41 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../../core/models/post_model.dart';
 import '../../core/services/api_service.dart';
 import '../../core/services/cache_service.dart';
-
 
 class PostController extends GetxController {
   final ApiService _apiService = ApiService();
   final CacheService _cacheService = CacheService();
 
-  var posts = <Post>[].obs;
-  var isLoading = true.obs;
-  var hasError = false.obs;
-  var isOffline = false.obs;
+  RxList posts = <Post>[].obs;
+  final RxBool isLoading = true.obs;
+  final RxBool hasError = false.obs;
+  final RxBool isOffline = false.obs;
 
   @override
   void onInit() {
-    fetchPosts();
     super.onInit();
+    fetchPosts();
   }
 
   Future<void> fetchPosts() async {
-    try {
-      isLoading(true);
-      hasError(false);
-      isOffline(false);
+    isLoading(true);
+    hasError(false);
+    isOffline(false);
 
-      // Try to fetch from API
+    try {
+      /// Try to fetch from API
       final fetchedPosts = await _apiService.fetchPosts();
       posts.assignAll(fetchedPosts);
 
-      // Cache the fetched data
+      /// Save to cache
       await _cacheService.cachePosts(fetchedPosts);
-    } catch (e) {
-      // If API fails, try to load from cache
+    } catch (e, stack) {
+      debugPrint("API fetch failed: $e");
+      debugPrint(stack.toString());
+
+      /// Try cache if available
       if (_cacheService.hasCachedData()) {
         final cachedPosts = _cacheService.getCachedPosts();
         posts.assignAll(cachedPosts);
@@ -46,7 +48,7 @@ class PostController extends GetxController {
     }
   }
 
-  void refreshPosts() {
-    fetchPosts();
+  Future<void> refreshPosts() async {
+    await fetchPosts();
   }
 }

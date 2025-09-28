@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'app_text_theme.dart';
+
 class AppTheme {
-  static const Color primaryColor = Color(0xFF6200EE);
-  static const Color primaryVariantColor = Color(0xFF3700B3);
+  static const Color primaryColor = Color(0xFF1B6EF7);
   static const Color secondaryColor = Color(0xFF03DAC5);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color surfaceColor = Color(0xFFFFFFFF);
@@ -24,11 +25,12 @@ class AppTheme {
       primarySwatch: Colors.deepPurple,
       primaryColor: primaryColor,
       hintColor: secondaryColor,
-      scaffoldBackgroundColor: backgroundColor,
+      scaffoldBackgroundColor: Colors.white,
       cardColor: surfaceColor,
       fontFamily: 'Roboto',
       appBarTheme: const AppBarTheme(
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: onPrimaryColor),
         titleTextStyle: TextStyle(
@@ -52,43 +54,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+      textTheme: AppTextTheme.light,
     );
   }
 
-  static ThemeData get darkTheme {
-    return ThemeData(
-      brightness: Brightness.dark,
-      primarySwatch: Colors.deepPurple,
-      primaryColor: primaryColor,
-      hintColor: secondaryColor,
-      scaffoldBackgroundColor: darkBackgroundColor,
-      cardColor: darkSurfaceColor,
-      fontFamily: 'Roboto',
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF1F1F1F),
-        elevation: 0,
-        iconTheme: IconThemeData(color: darkOnSurfaceColor),
-        titleTextStyle: TextStyle(
-          color: darkOnSurfaceColor,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
-          foregroundColor: onPrimaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-    );
-  }
 }

@@ -1,20 +1,31 @@
 import 'dart:convert';
-
-import 'package:sm_task_project/core/models/post_model.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http ;
+import '../models/post_model.dart';
 import '../urls/urls.dart';
 
-class ApiService{
+class ApiService {
 
   Future<List<Post>> fetchPosts() async {
-    final response = await http.get(Uri.parse(Urls.postUrl));
-    if(response.statusCode == 200){
-      List<dynamic> body = json.decode(response.body);
-      return body.map((dynamic item) => Post.fromJson(item)).toList();
-    }else{
-      throw Exception('Failed to load posts');
+    try {
+      final url = Uri.parse(Urls.postUrl);
+      debugPrint("🌍 Fetching posts from $url");
+
+      final response = await http.get(url);
+
+      debugPrint("📡 Response status: ${response.statusCode}");
+      debugPrint("📡 Response body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<dynamic> postsJson = data['posts'];
+        return postsJson.map((e) => Post.fromJson(e)).toList();
+      } else {
+        throw Exception("Failed to load posts: ${response.statusCode}");
+      }
+    } catch (e) {
+      debugPrint("Network/Parsing error: $e");
+      rethrow;
     }
   }
-
 }

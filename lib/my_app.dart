@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/state_controller_binders/state_controller_binder.dart';
-import 'package:sm_task_project/presentations/controllers/theme_controller.dart';
+import 'package:sm_task_project/presentations/view/splash_screen/splash_screen.dart';
+import 'core/route_config/app_routes.dart';
+import 'core/route_config/route_names.dart';
+import 'core/theme/app_theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,20 +14,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'SMT Task',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeController().theme,
-      home: PostView(),
+      theme: AppTheme.lightTheme,
+      home: SplashScreen(),
+      initialRoute: RouteNames.splashScreen,
+      getPages: AppRoutes.routes,
       initialBinding: StateControllerBinder(),
     );
-  }
-}
-class PostView extends StatelessWidget {
-  const PostView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 

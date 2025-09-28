@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import '../models/post_model.dart';
 
 class  CacheService{
-  final Box _box = Hive.box("postCache");
+  final Box _box = Hive.box("postsCache");
 
   Future<void> cachePosts(List<Post> posts)async{
     await _box.clear();
