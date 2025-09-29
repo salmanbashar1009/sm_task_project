@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:sm_task_project/core/theme/app_theme.dart';
 import 'package:sm_task_project/presentations/controllers/sign_in_controller.dart';
 
+import '../../../../core/route_config/route_names.dart';
+
 class SignInForm extends StatelessWidget {
   SignInForm({super.key});
 
@@ -25,7 +27,7 @@ class SignInForm extends StatelessWidget {
           const SizedBox(height: 10),
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'Enter Password',
+              hintText: 'Enter email',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(100),
                 borderSide: BorderSide(color: AppTheme.borderColor),
@@ -85,11 +87,16 @@ class SignInForm extends StatelessWidget {
                 ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
               ),
               Spacer(),
-              Text(
-                "Forgot Password",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteNames.forgotPasswordScreen);
+                },
+                child: Text(
+                  "Forgot Password",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+                ),
               ),
             ],
           ),

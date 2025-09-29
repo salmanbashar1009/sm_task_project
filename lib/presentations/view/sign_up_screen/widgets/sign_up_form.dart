@@ -23,7 +23,7 @@ class SignUpForm extends StatelessWidget {
         const SizedBox(height: 10),
         TextFormField(
           decoration: InputDecoration(
-            hintText: 'Enter your email',
+            hintText: 'Enter email',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100),
               borderSide: BorderSide(color: AppTheme.borderColor),
@@ -41,7 +41,7 @@ class SignUpForm extends StatelessWidget {
         const SizedBox(height: 10),
         TextFormField(
           decoration: InputDecoration(
-            hintText: 'Enter your full name',
+            hintText: 'Enter full name',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100),
               borderSide: BorderSide(color: AppTheme.borderColor),
