@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:sm_task_project/core/route_config/route_names.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/reset_password_screen/reset_password_screen.dart';
+import 'package:sm_task_project/presentations/view/forgot_password_screens/verify_code_screen/verify_code_screen.dart';
 import 'package:sm_task_project/presentations/view/onboarding_screen/onboarding_screen.dart';
 import 'package:sm_task_project/presentations/view/sign_in_screen/sign_in_screen.dart';
 import 'package:sm_task_project/presentations/view/sign_up_screen/sign_up_screen.dart';
@@ -53,8 +54,8 @@ class AppRoutes {
       binding: StateControllerBinder()
     ),
     GetPage(
-      name: RouteNames.signUpScreen,
-      page: () => SignUpScreen(),
+      name: RouteNames.verifyCodeScreen,
+      page: () => VerifyCodeScreen(),
       transition: Transition.rightToLeft,
       binding: StateControllerBinder()
     ),

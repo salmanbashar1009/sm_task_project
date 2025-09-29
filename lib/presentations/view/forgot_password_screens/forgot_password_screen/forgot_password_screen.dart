@@ -27,7 +27,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width  * 0.6,
+                  width: MediaQuery.of(context).size.width  * 0.8,
                   child: Text(
                     "Enter your email, we will send a verification code to email",
                     style: Theme.of(context).textTheme.bodyMedium,

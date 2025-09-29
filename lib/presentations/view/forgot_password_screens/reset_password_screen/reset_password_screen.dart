@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/route_config/route_names.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../controllers/forgot_password_controller.dart';
@@ -29,7 +30,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width  * 0.7,
+                  width: MediaQuery.of(context).size.width  * 0.8,
                   child: Text(
                     "Your password must be at least 8 characters long and include a combination of letters, numbers",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -103,7 +104,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 56,
                   child: Utils.primaryButton(onTap: (){
-
+                    Get.toNamed(RouteNames.verifyCodeScreen);
                   }, buttonText: "Continue"),
                 )
               ],
