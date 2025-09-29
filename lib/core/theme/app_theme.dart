@@ -14,11 +14,9 @@ class AppTheme {
   static const Color onSurfaceColor = Color(0xFF000000);
   static const Color onErrorColor = Color(0xFFFFFFFF);
 
-  // Dark theme colors
-  static const Color darkBackgroundColor = Color(0xFF121212);
-  static const Color darkSurfaceColor = Color(0xFF121212);
-  static const Color darkOnBackgroundColor = Color(0xFFFFFFFF);
-  static const Color darkOnSurfaceColor = Color(0xFFFFFFFF);
+  static const Color borderColor = Color(0xFFCBD5E1);
+
+
 
   static ThemeData get lightTheme {
     return ThemeData(

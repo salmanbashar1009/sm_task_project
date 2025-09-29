@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/route_config/route_names.dart';
 import 'package:sm_task_project/presentations/view/onboarding_screen/onboarding_screen.dart';
+import 'package:sm_task_project/presentations/view/sign_in_screen/sign_in_screen.dart';
+import 'package:sm_task_project/presentations/view/sign_up_screen/sign_up_screen.dart';
 import '../../presentations/view/post_screen/post_screen.dart';
 import '../../presentations/view/splash_screen/splash_screen.dart';
 
@@ -14,12 +16,22 @@ class AppRoutes {
     GetPage(
       name: RouteNames.postScreen,
       page: () => PostScreen(),
-      transition: Transition.circularReveal,
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: RouteNames.onBoardingScreen,
       page: () => OnboardingScreen(),
-      transition: Transition.fadeIn,
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: RouteNames.signInScreen,
+      page: () => SignInScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: RouteNames.signUpScreen,
+      page: () => SignUpScreen(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }
