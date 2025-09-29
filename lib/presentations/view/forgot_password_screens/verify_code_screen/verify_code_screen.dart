@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/presentations/controllers/forgot_password_controller.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/verify_code_screen/widgets/otp_text_field.dart';
-
-import '../../../../core/route_config/route_names.dart';
 import '../../../../core/utils/utils.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
