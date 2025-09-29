@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../theme/app_theme.dart';
 
@@ -18,4 +19,25 @@ class Utils{
      ),
    );
  }
+
+ static Widget backButton(){
+   return GestureDetector(
+     onTap: (){
+       Get.back();
+     },
+     child: Container(
+       width: 44,
+       height: 44,
+       decoration: BoxDecoration(
+         shape: BoxShape.circle,
+         border: Border.all(color: Color(0xFFE2E8F0))
+       ),
+       child: Padding(
+         padding: const EdgeInsets.only(left: 8.0),
+         child: Icon(Icons.arrow_back_ios,color: Colors.black54,),
+       ),
+     ),
+   );
+ }
+
 }
