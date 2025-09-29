@@ -17,5 +17,10 @@ class AppTextTheme{
       fontWeight: FontWeight.w400,
       color: Color(0xFF636F85)
     ),
+    bodyLarge: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color:Color(0xFF2D2D2D)
+    ),
   );
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:sm_task_project/presentations/controllers/forgot_password_controller.dart';
 import 'package:sm_task_project/presentations/controllers/onboarding_controller.dart';
+import 'package:sm_task_project/presentations/controllers/select_language_controller.dart';
 import '../../presentations/controllers/post_controller.dart';
 import '../../presentations/controllers/sign_in_controller.dart';
 import '../../presentations/controllers/sign_up_controller.dart';
@@ -15,5 +16,6 @@ class StateControllerBinder extends Bindings{
     Get.lazyPut(()=> SignInController());
     Get.lazyPut(()=> SignUpController());
     Get.lazyPut(()=> ForgotPasswordController());
+    Get.lazyPut(()=> SelectLanguageController());
   }
 }

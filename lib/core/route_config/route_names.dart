@@ -7,4 +7,6 @@ abstract class RouteNames{
  static const String forgotPasswordScreen  = '/forgotPasswordScreen';
  static const String resetPasswordScreen  = '/resetPasswordScreen';
  static const String verifyCodeScreen  = '/verifyCodeScreen';
+ static const String enableLocationScreen  = '/enableLocationScreen';
+ static const String selectLanguageScreen  = '/selectLanguageScreen';
 }

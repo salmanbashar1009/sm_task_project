@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/route_config/route_names.dart';
+import 'package:sm_task_project/presentations/view/enable_location_screens/enable_location_screen.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/reset_password_screen/reset_password_screen.dart';
 import 'package:sm_task_project/presentations/view/forgot_password_screens/verify_code_screen/verify_code_screen.dart';
 import 'package:sm_task_project/presentations/view/onboarding_screen/onboarding_screen.dart';
+import 'package:sm_task_project/presentations/view/select_language_screens/select_lanugage_screen.dart';
 import 'package:sm_task_project/presentations/view/sign_in_screen/sign_in_screen.dart';
 import 'package:sm_task_project/presentations/view/sign_up_screen/sign_up_screen.dart';
 import '../../presentations/view/post_screen/post_screen.dart';
@@ -58,6 +60,17 @@ class AppRoutes {
       page: () => VerifyCodeScreen(),
       transition: Transition.rightToLeft,
       binding: StateControllerBinder()
+    ),
+    GetPage(
+      name: RouteNames.selectLanguageScreen,
+      page: () => SelectLanguageScreen(),
+      transition: Transition.rightToLeft,
+      binding: StateControllerBinder()
+    ),
+    GetPage(
+        name: RouteNames.enableLocationScreen,
+        page: ()=> EnableLocationScreen(),
+      transition: Transition.rightToLeft
     ),
 
   ];

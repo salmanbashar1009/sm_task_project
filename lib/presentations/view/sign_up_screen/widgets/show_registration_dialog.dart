@@ -50,7 +50,7 @@ void showRegistrationDialog({required BuildContext context}) {
               height: 56,
               width: double.infinity,
               child: Utils.primaryButton(onTap: (){
-                Get.offAllNamed(RouteNames.signInScreen);
+                Get.offAllNamed(RouteNames.enableLocationScreen);
               }, buttonText: 'Continue'),
             ),
             const SizedBox(height: 10,)
