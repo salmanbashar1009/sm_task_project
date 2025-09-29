@@ -21,7 +21,12 @@ class OnboardingScreen extends StatelessWidget {
               Expanded(
                 child: PageView.builder(
                   itemCount: controller.onboardingData.length,
-                  onPageChanged: controller.changeCurrentIndex,
+                  controller: controller.pageController,
+                  onPageChanged: (index){
+                    WidgetsBinding.instance.addPostFrameCallback((_){
+                      controller.changeCurrentIndex(index);
+                    });
+                  },
                   itemBuilder: (context, index) {
                     final data = controller.onboardingData[index];
                     return OnboardingPage(image: data['image']!, title: data['title']!, description: data['description']!);
@@ -59,6 +64,7 @@ class OnboardingScreen extends StatelessWidget {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
+                        controller.nextPage();
                         if (!isLastPage) {
                           controller.changeCurrentIndex(controller.currentIndex.value + 1);
                         } else {

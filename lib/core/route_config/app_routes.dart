@@ -19,7 +19,7 @@ class AppRoutes {
     GetPage(
       name: RouteNames.onBoardingScreen,
       page: () => OnboardingScreen(),
-      transition: Transition.rightToLeft,
+      transition: Transition.fadeIn,
     ),
   ];
 }

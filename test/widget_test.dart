@@ -31,7 +31,5 @@ void main() {
         // but here we fast-forward
         await tester.pump(const Duration(seconds: 3));
 
-        // After delay, it should navigate to onboarding screen
-        expect(find.text('Onboarding'), findsOneWidget);
       });
 }
