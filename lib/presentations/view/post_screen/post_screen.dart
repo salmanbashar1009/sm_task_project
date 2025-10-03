@@ -14,11 +14,13 @@ class PostScreen extends StatelessWidget {
         // backgroundColor: Colors.transparent,
         title: Obx(() => Text(controller.isOffline.value
             ? 'Posts (Offline Mode)'
-            : 'Posts')),
+            : 'Posts',style: Theme.of(context).textTheme.bodyLarge,)),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: controller.refreshPosts,
+            icon: const Icon(Icons.refresh, color: Colors.black54,),
+            onPressed: ()async{
+              await controller.refreshPosts();
+            },
           ),
         ],
       ),

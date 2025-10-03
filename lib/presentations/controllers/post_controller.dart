@@ -8,7 +8,7 @@ class PostController extends GetxController {
   final ApiService _apiService = ApiService();
   final CacheService _cacheService = CacheService();
 
-  RxList posts = <Post>[].obs;
+  final RxList posts = <Post>[].obs;
   final RxBool isLoading = true.obs;
   final RxBool hasError = false.obs;
   final RxBool isOffline = false.obs;
@@ -25,21 +25,22 @@ class PostController extends GetxController {
     isOffline(false);
 
     try {
-      /// Try to fetch from API
       final fetchedPosts = await _apiService.fetchPosts();
       posts.assignAll(fetchedPosts);
-
-      /// Save to cache
-      await _cacheService.cachePosts(fetchedPosts);
+      await _cacheService.cachePosts(fetchedPosts);  // Already awaited
     } catch (e, stack) {
       debugPrint("API fetch failed: $e");
       debugPrint(stack.toString());
 
-      /// Try cache if available
-      if (_cacheService.hasCachedData()) {
-        final cachedPosts = _cacheService.getCachedPosts();
-        posts.assignAll(cachedPosts);
-        isOffline(true);
+      final hasCache = await _cacheService.hasCachedData();  // Now await
+      if (hasCache) {
+        final cachedPosts = await _cacheService.getCachedPosts();  // Now await
+        if (cachedPosts.isNotEmpty) {
+          posts.assignAll(cachedPosts);
+          isOffline(true);
+        } else {
+          hasError(true);
+        }
       } else {
         hasError(true);
       }
