@@ -1,62 +1,98 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 import '../models/post_model.dart';
 
 class CacheService {
-  Box? _box;
+  late final Box _box;
   static const String _boxName = 'postsCache';
   static const String _postsKey = 'posts';
 
-  // Lazy init to ensure box is open
-  Future<Box> get _lazyBox async {
-    _box ??= Hive.box(_boxName);
-    return _box!;
-  }
+  CacheService._();  /// private constructor for singleton
 
-  Future<void> cachePosts(List<Post> posts) async {
-    try {
-      final box = await _lazyBox;
-      // No clear() - just overwrite the key
-      await box.put(_postsKey, posts);  // Direct List<Post> storage using adapter
-      print('Posts cached directly: ${posts.length} items');  // Debug: Check console
-    } catch (e) {
-      print('Cache save error: $e');
+  static final CacheService cacheService = CacheService._();
+
+
+  /// initialize hive and open box
+  Future<void> init() async{
+    try{
+      _box = await Hive.openBox(_boxName);
+      if(kDebugMode){
+        print('CacheService: Hive box $_boxName opened successfully');
+      }
+    }catch(e){
+      if(kDebugMode){
+        print("CacheService: Failed to initialize hive box: $e");
+      }
       rethrow;
     }
   }
 
-  Future<List<Post>> getCachedPosts() async {
-    try {
-      final box = await _lazyBox;
-      final cachedData = box.get(_postsKey);
-      if (cachedData == null || (cachedData as List<Post>).isEmpty) {
-        print('No cached posts found');  // Debug
+  /// cache posts to hive
+Future<void> cachePosts(List<Post> posts)async{
+    try{
+      await _box.put(_postsKey, posts);
+      if(kDebugMode){
+        print("CacheServices: Cached ${posts.length} posts");
+      }
+    }catch(e){
+      if(kDebugMode){
+        print("CacheServices: Failed to cache posts: $e");
+      }
+      rethrow;
+    }
+}
+
+ /// Retrieve cached posts
+Future<List<Post>> getCachedPosts() async {
+    try{
+      final cachedData = await  _box.get(_postsKey);
+      if(cachedData == null || cachedData.isEmpty){
+        if(kDebugMode){
+          print("CacheServices: No cached posts found");
+        }
         return [];
       }
-      final posts = List<Post>.from(cachedData);
-      print('Loaded ${posts.length} cached posts');  // Debug
+      final posts = (cachedData as List<dynamic>).cast<Post>();
+      if(kDebugMode){
+        print('CacheServices: Loaded ${posts.length} cached posts');
+      }
       return posts;
-    } catch (e) {
-      print('Cache load error: $e');
+    }catch(e){
+      if (kDebugMode) {
+        print('CacheService: Failed to load cached posts: $e');
+      }
       return [];
     }
-  }
+}
 
-  Future<bool> hasCachedData() async {
-    try {
-      final box = await _lazyBox;
-      final hasData = box.containsKey(_postsKey);
-      print('Has cached data: $hasData');  // Debug
+/// check if cache contains data
+Future<bool> hasCachedData()async{
+    try{
+      final hasData = _box.containsKey(_postsKey) && _box.get(_postsKey)?.isNotEmpty == true;
+      if(kDebugMode){
+        print("CacheServices: Has cached data: $hasData");
+      }
       return hasData;
-    } catch (e) {
-      print('Cache check error: $e');
+    }catch(e){
+      if(kDebugMode){
+        print("CacheServices: Error checking cache: $e");
+      }
       return false;
     }
-  }
+}
 
-  // Optional: Clear specific key only
-  Future<void> clearCache() async {
-    final box = await _lazyBox;
-    await box.delete(_postsKey);
-  }
+/// close the hive box (should be called when app is terminated)
+Future<void> close() async{
+    try{
+      await _box.close();
+      if(kDebugMode){
+        print("CacheServices: Hive box $_boxName closed");
+      }
+    }catch(e){
+      if(kDebugMode){
+        print("CacheServices: Error closing hive box: $e");
+      }
+    }
+}
 }
