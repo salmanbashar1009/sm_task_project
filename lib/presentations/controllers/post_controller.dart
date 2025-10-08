@@ -1,22 +1,22 @@
 import 'dart:convert';
-import 'dart:isolate';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
 import '../../core/models/post_model.dart';
 import '../../core/services/cache_service.dart';
 import '../../core/urls/urls.dart';
 
 class PostController extends GetxController {
-  final RxList posts = <Post>[].obs;
+  final RxList<Post> posts = <Post>[].obs;
   final RxBool isLoading = true.obs;
   final RxBool isOffline = false.obs;
   final RxBool hasError = false.obs;
 
   final CacheService _cacheService = CacheService.cacheService;
-  final
+  final Connectivity _connectivity = Connectivity();
 
   @override
   void onInit() {
@@ -27,66 +27,61 @@ class PostController extends GetxController {
   Future<void> fetchPosts() async {
     try {
       isLoading.value = true;
-      isOffline.value = false;
       hasError.value = false;
+      isOffline.value = false;
 
-      List<ConnectivityResult> connectivityResult = await Connectivity().checkConnectivity();
+      final connectivityResult = await _connectivity.checkConnectivity();
 
-      if (!connectivityResult.contains(ConnectivityResult.none)){
-        final url = Uri.parse(Urls.postUrl);
-        final response = await http.get(url);
-        if(response.statusCode == 200){
+      if (connectivityResult != ConnectivityResult.none) {
+        final response = await http.get(Uri.parse(Urls.postUrl)).timeout(
+          const Duration(seconds: 10),
+          onTimeout: () => throw Exception('Request timed out'),
+        );
+
+        if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
-          final fetchedPosts = (data['posts'] as List).map((e)=> Post.fromJson(e)).toList();
-          /// run caching in isolate
-          final receivePort = ReceivePort();
-          await Isolate.spawn(_cachePostsInIsolator, [
-            _cacheService,
-            fetchedPosts,
-            receivePort.sendPort
-          ]);
-          /// wait for isolate completion
-          final cacheSuccess = await receivePort.first as bool;
-          if(!cacheSuccess){
-            if(kDebugMode){
-              print("Failed to cache posts in isolate");
-            }
+          final fetchedPosts = (data['posts'] as List)
+              .map((e) => Post.fromJson(e))
+              .toList();
+
+          // Cache posts in the main isolate
+          try {
+            await _cacheService.cachePosts(fetchedPosts);
+          } catch (e) {
+            debugPrint('Failed to cache posts: $e');
           }
+
           posts.assignAll(fetchedPosts);
-        }else{
+        } else {
           throw Exception('Failed to load posts: ${response.statusCode}');
         }
-      }else{
-        /// load cache data here
-        await _loadCacheData();
+      } else {
+        await _loadFromCache();
       }
-    } catch (e,stack) {
-      if(kDebugMode){
-        print("Error fetching posts: $e");
-        print(stack.toString());
-        await _loadCacheData();
-
-      }
+    } catch (e, stack) {
+      debugPrint('Error fetching posts: $e');
+      debugPrint(stack.toString());
+      await _loadFromCache();
     } finally {
-     isLoading.value = false;
+      isLoading.value = false;
     }
   }
 
-  Future<void> _loadCacheData()async{
-    try{
+  Future<void> _loadFromCache() async {
+    try {
       final hasCache = await _cacheService.hasCachedData();
-      if(hasCache){
+      if (hasCache) {
         final cachedPosts = await _cacheService.getCachedPosts();
-        if(cachedPosts.isNotEmpty){
+        if (cachedPosts.isNotEmpty) {
           posts.assignAll(cachedPosts);
           isOffline.value = true;
           return;
         }
       }
-    }catch(e){
-      if(kDebugMode){
-        print('Error loading cached posts: $e');
-      }
+      hasError.value = true;
+    } catch (e, stack) {
+      debugPrint('Error loading cached posts: $e');
+      debugPrint(stack.toString());
       hasError.value = true;
     }
   }
@@ -94,16 +89,13 @@ class PostController extends GetxController {
   Future<void> refreshPosts() async {
     await fetchPosts();
   }
-}
 
-void _cachePostsInIsolator(List<dynamic> args)async{
-  final cacheService = args[0] as CacheService;
-  final posts = args[1] as List<Post>;
-  final sendPort = args[2] as SendPort;
-  try{
-    await cacheService.cachePosts(posts);
-    sendPort.send(true);
-  }catch(e){
-    sendPort.send(false);
+  @override
+  void onClose() {
+    posts.close();
+    isLoading.close();
+    isOffline.close();
+    hasError.close();
+    super.onClose();
   }
 }
