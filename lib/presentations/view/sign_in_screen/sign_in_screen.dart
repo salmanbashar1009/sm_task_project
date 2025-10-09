@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/constant/app_images.dart';
 import 'package:sm_task_project/core/utils/utils.dart';
@@ -20,24 +21,24 @@ class SignInScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(AppImages.signInImage, width: 70, height: 70),
-              const SizedBox(height: 16),
+              Image.asset(AppImages.signInImage, width: 70.w, height: 70.h),
+               SizedBox(height: 16.h),
               Text(
                 'Welcome Back!',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const SizedBox(height: 8),
+               SizedBox(height: 8.h),
               Text(
                 'Please login first to start your Theory Test.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              const SizedBox(height: 40),
+               SizedBox(height: 40.h),
               SignInForm(),
-              const SizedBox(height: 24),
+               SizedBox(height: 24.h),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding:  EdgeInsets.symmetric(horizontal: 24.w),
                 child: SizedBox(
-                  height: 56,
+                  height: 56.h,
                   width: double.infinity,
                   child: Utils.primaryButton(
                     onTap: () {
@@ -47,7 +48,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
+               SizedBox(height: 16.h,),
               RichText(text: TextSpan(
                 children: <TextSpan>[
                   TextSpan(

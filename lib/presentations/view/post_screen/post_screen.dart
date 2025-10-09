@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../controllers/post_controller.dart';
 
@@ -44,7 +45,7 @@ class PostScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             final post = controller.posts[index];
             return Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: ListTile(
                 title: Text(
                   post.title,

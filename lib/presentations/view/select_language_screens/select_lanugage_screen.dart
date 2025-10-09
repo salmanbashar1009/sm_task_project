@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../core/route_config/route_names.dart';
@@ -29,9 +30,9 @@ class SelectLanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leadingWidth: 80, leading: Utils.backButton()),
+      appBar: AppBar(leadingWidth: 80.w, leading: Utils.backButton()),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:  EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,24 +40,24 @@ class SelectLanguageScreen extends StatelessWidget {
               'What is Your Mother Language',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               'Discover what is a podcast description and podcast summary.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 24.h),
             Expanded(
               child: ListView.builder(
                 itemCount: languages.length,
                 itemBuilder: (context, index) {
                   final language = languages[index];
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 24.0),
+                    padding:  EdgeInsets.only(bottom: 24.h),
                     child: Obx(
                       () => ListTile(
                         leading: Text(
                           language['flag']!,
-                          style: TextStyle(fontSize: 24),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
 
                         title: Text(
@@ -70,18 +71,18 @@ class SelectLanguageScreen extends StatelessWidget {
                                 onTap: null,
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
+                                    horizontal: 12.w,
+                                    vertical: 8.h,
                                   ),
                                   decoration: BoxDecoration(
                                     color: AppTheme.primaryColor,
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(20.r),
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.check, color: Colors.white,size: 16,),
-                                      SizedBox(width:5),
+                                      Icon(Icons.check, color: Colors.white,size: 16.r,),
+                                      SizedBox(width:5.w),
                                       Text(
                                         'Selected',
                                         style: TextStyle(color: Colors.white),
@@ -96,12 +97,12 @@ class SelectLanguageScreen extends StatelessWidget {
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
+                                  horizontal: 12.w,
+                                  vertical: 8.h,
                                 ),
                                 decoration: BoxDecoration(
                                   color: Color(0xFFEBEBEB),
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(8.r),
                                 ),
                                 child: Text(
                                   'Select',
@@ -117,9 +118,9 @@ class SelectLanguageScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             SizedBox(
-              height: 56,
+              height: 56.h,
               width: double.infinity,
               child: Utils.primaryButton(
                 onTap: () {
@@ -128,7 +129,7 @@ class SelectLanguageScreen extends StatelessWidget {
                 buttonText: "Continue",
               ),
             ),
-            SizedBox(height: 56),
+            SizedBox(height: 56.h),
           ],
         ),
       ),

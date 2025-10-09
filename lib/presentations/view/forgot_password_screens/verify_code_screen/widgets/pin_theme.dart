@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 const Color red = Color(0xFFE11E1B);
@@ -13,9 +14,9 @@ const Color white = Color(0xFFFFFFFF);
 PinTheme pinTheme(){
   return PinTheme(
       shape: PinCodeFieldShape.box,
-      borderRadius: BorderRadius.circular(12),
-      fieldHeight: 56,
-      fieldWidth: 56,
+      borderRadius: BorderRadius.circular(12.r),
+      fieldHeight: 56.h,
+      fieldWidth: 56.w,
       activeFillColor: Colors.white,
       activeColor: Colors.green,
       inactiveFillColor: white,

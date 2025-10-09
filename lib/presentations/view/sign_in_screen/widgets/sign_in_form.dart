@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/theme/app_theme.dart';
 import 'package:sm_task_project/presentations/controllers/sign_in_controller.dart';
@@ -13,7 +14,7 @@ class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding:  EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,17 +25,17 @@ class SignInForm extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 10),
+           SizedBox(height: 10.h),
           TextFormField(
             decoration: InputDecoration(
               hintText: 'Enter email',
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(100.r),
                 borderSide: BorderSide(color: AppTheme.borderColor),
               ),
             ),
           ),
-          const SizedBox(height: 16),
+           SizedBox(height: 16.h),
           Text(
             'Password',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -42,14 +43,14 @@ class SignInForm extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 10),
+           SizedBox(height: 10.h),
           Obx(
             () => TextFormField(
               obscureText: controller.isPasswordHidden.value,
               decoration: InputDecoration(
                 hintText: '********',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(100.r),
                   borderSide: BorderSide(color: AppTheme.borderColor),
                 ),
                 suffixIcon: IconButton(
@@ -65,7 +66,7 @@ class SignInForm extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+           SizedBox(height: 16.h),
           Row(
             children: [
              Obx(()=> IconButton(
@@ -79,7 +80,7 @@ class SignInForm extends StatelessWidget {
                  color: AppTheme.primaryColor,
                ),
              ),),
-              const SizedBox(width: 8),
+               SizedBox(width: 8.w),
               Text(
                 "Remember me",
                 style: Theme.of(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/constant/app_images.dart';
 import 'package:sm_task_project/core/route_config/route_names.dart';
@@ -31,38 +32,41 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
+          padding:  EdgeInsets.all(30.r),
+          child: Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 2),
 
-              Image.asset(
-                AppImages.splashCar,
-                width: 124,
-                height: 124,
-              ),
-              const SizedBox(height: 16),
+                Image.asset(
+                  AppImages.splashCar,
+                  width: 124.w,
+                  height: 124.h,
+                ),
+                 SizedBox(height: 16.h),
 
-              Text(
-                'Theory test in my language',
-                style: textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
+                Text(
+                  'Theory test in my language',
+                  style: textTheme.titleLarge,
+                ),
+                 SizedBox(height: 16.h),
 
-              Text(
-                'I must write the real test will be in English language and this app just helps you to understand the materials in your language',
-                style: textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
+                Text(
+                  'I must write the real test will be in English language and this app just helps you to understand the materials in your language',
+                  style: textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
 
-              const Spacer(flex: 3),
+                const Spacer(flex: 3),
 
-              // Loading Indicator
-              const CircularProgressIndicator(color: AppTheme.primaryColor),
+                // Loading Indicator
+                const CircularProgressIndicator(color: AppTheme.primaryColor),
 
-              const SizedBox(height: 56),
-            ],
+                 SizedBox(height: 56.h),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sm_task_project/core/theme/app_theme.dart';
 import 'package:sm_task_project/presentations/controllers/sign_up_controller.dart';
@@ -20,17 +21,17 @@ class SignUpForm extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 10),
+         SizedBox(height: 10.h),
         TextFormField(
           decoration: InputDecoration(
             hintText: 'Enter email',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(100.r),
               borderSide: BorderSide(color: AppTheme.borderColor),
             ),
           ),
         ),
-        const SizedBox(height: 16),
+         SizedBox(height: 16.h),
         Text(
           'Full Name',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -38,17 +39,17 @@ class SignUpForm extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 10),
+         SizedBox(height: 10.h),
         TextFormField(
           decoration: InputDecoration(
             hintText: 'Enter full name',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(100.r),
               borderSide: BorderSide(color: AppTheme.borderColor),
             ),
           ),
         ),
-        const SizedBox(height: 16),
+         SizedBox(height: 16.h),
         Text(
           'Password',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -56,14 +57,14 @@ class SignUpForm extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 10),
+         SizedBox(height: 10.h),
         Obx(
           () => TextFormField(
             obscureText: controller.isPasswordHidden.value,
             decoration: InputDecoration(
               hintText: '********',
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(100.r),
                 borderSide: BorderSide(color: AppTheme.borderColor),
               ),
               suffixIcon: IconButton(
@@ -87,7 +88,7 @@ class SignUpForm extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 16),
+         SizedBox(height: 16.h),
         Obx(() => Row(
           children: [
             SizedBox(
@@ -97,7 +98,7 @@ class SignUpForm extends StatelessWidget {
                 backgroundColor: Colors.grey[300],
                 color: controller.strength.value > 0.7 ? Colors.green :
                 controller.strength.value > 0.3 ? Colors.orange : Colors.red,
-                minHeight: 6,
+                minHeight: 6.h,
 
               ),
             ),
@@ -114,7 +115,7 @@ class SignUpForm extends StatelessWidget {
 
           ],
         )),
-        SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Obx(() => Text(
           'At least 8 characters with a combination of letters and numbers',
           style: TextStyle(

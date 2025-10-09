@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_text_theme.dart';
 
@@ -26,14 +27,14 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.white,
       cardColor: surfaceColor,
       fontFamily: 'Roboto',
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: onPrimaryColor),
         titleTextStyle: TextStyle(
           color: onPrimaryColor,
-          fontSize: 20,
+          fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
       ),

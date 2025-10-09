@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/route_config/route_names.dart';
@@ -14,21 +15,21 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leadingWidth: 100, leading: Utils.backButton()),
+      appBar: AppBar(leadingWidth: 100.w, leading: Utils.backButton()),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding:  EdgeInsets.symmetric(horizontal: 24.w),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 32,),
+                 SizedBox(height: 32.h,),
                 Text(
                   "Reset Password",
                   style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
+                 SizedBox(height: 8.h),
                 SizedBox(
                   width: MediaQuery.of(context).size.width  * 0.8,
                   child: Text(
@@ -37,7 +38,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 36,),
+                 SizedBox(height: 36.h,),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text("New Password",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -45,14 +46,14 @@ class ResetPasswordScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500
                   ),),
                 ),
-                const SizedBox(height: 10,),
+                 SizedBox(height: 10.h,),
                 Obx(
                       () => TextFormField(
                     obscureText: controller.isNewPasswordHidden.value,
                     decoration: InputDecoration(
                       hintText: '********',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(100),
+                        borderRadius: BorderRadius.circular(100.r),
                         borderSide: BorderSide(color: AppTheme.borderColor),
                       ),
                       suffixIcon: IconButton(
@@ -68,7 +69,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16,),
+                 SizedBox(height: 16.h,),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text("New Password",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -76,14 +77,14 @@ class ResetPasswordScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500
                   ),),
                 ),
-                const SizedBox(height: 10,),
+                 SizedBox(height: 10.h,),
                 Obx(
                       () => TextFormField(
                     obscureText: controller.isConfirmPasswordHidden.value,
                     decoration: InputDecoration(
                       hintText: '********',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(100),
+                        borderRadius: BorderRadius.circular(100.r),
                         borderSide: BorderSide(color: AppTheme.borderColor),
                       ),
                       suffixIcon: IconButton(
@@ -99,10 +100,10 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40,),
+                 SizedBox(height: 40.h,),
                 SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 56.h,
                   child: Utils.primaryButton(onTap: (){
                     Get.toNamed(RouteNames.verifyCodeScreen);
                   }, buttonText: "Continue"),

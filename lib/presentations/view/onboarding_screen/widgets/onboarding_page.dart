@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({
@@ -17,14 +18,14 @@ class OnboardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, height: 300),
-        SizedBox(height: 40),
+        Image.asset(image, height: 300.h),
+        SizedBox(height: 40.h),
         Text(
           title,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Text(
           description,
           textAlign: TextAlign.center,
