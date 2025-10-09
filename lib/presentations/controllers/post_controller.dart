@@ -30,9 +30,10 @@ class PostController extends GetxController {
       hasError.value = false;
       isOffline.value = false;
 
-      final connectivityResult = await _connectivity.checkConnectivity();
+      // final connectivityResult = await _connectivity.checkConnectivity();
+      List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
 
-      if (connectivityResult != ConnectivityResult.none) {
+      if (!connectivityResult.contains(ConnectivityResult.none)) {
         final response = await http.get(Uri.parse(Urls.postUrl)).timeout(
           const Duration(seconds: 10),
           onTimeout: () => throw Exception('Request timed out'),
