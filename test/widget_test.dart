@@ -11,7 +11,7 @@ void main() {
         // Initialize ScreenUtil with a design size for testing
         await tester.pumpWidget(
           ScreenUtilInit(
-            designSize: const Size(360, 690), // Common design size, adjust if needed
+            designSize: const Size(360, 690), // Adjust if needed
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (context, child) {
@@ -30,16 +30,26 @@ void main() {
           ),
         );
 
-        // Allow the widget tree to build
+        // Allow the widget tree to build and settle any animations or async operations
         await tester.pumpAndSettle();
 
-        // Find the first text widget by its exact string
+        // Debug: Print the widget tree to inspect what's rendered
+        debugDumpApp();
+
+        // Find the text widget by its exact string
         final firstTextFinder = find.text('Theory test in my language');
 
-        // Verify it's present
-        expect(firstTextFinder, findsOneWidget);
+        // Check if the text is found
+        if (firstTextFinder.evaluate().isEmpty) {
+          // Debug: List all Text widgets to see what's actually rendered
+          final allTextWidgets = find.byType(Text).evaluate().map((e) => (e.widget as Text).data).toList();
+          print('Found Text widgets: $allTextWidgets');
+        }
 
-        // Fast-forward to allow any delayed animations or navigation
-        await tester.pump(const Duration(seconds: 3));
+        // Verify the text is present
+        expect(firstTextFinder, findsOneWidget, reason: 'Expected to find "Theory test in my language" but found none.');
+
+        // Fast-forward to allow delayed animations or navigation (e.g., Future.delayed)
+        await tester.pump(const Duration(seconds: 5));
       });
 }
