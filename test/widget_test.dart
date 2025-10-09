@@ -43,7 +43,7 @@ void main() {
         if (firstTextFinder.evaluate().isEmpty) {
           // Debug: List all Text widgets to see what's actually rendered
           final allTextWidgets = find.byType(Text).evaluate().map((e) => (e.widget as Text).data).toList();
-          print('Found Text widgets: $allTextWidgets');
+          debugPrint('Found Text widgets: $allTextWidgets');
         }
 
         // Verify the text is present
