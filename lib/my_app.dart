@@ -21,12 +21,13 @@ class MyApp extends StatelessWidget {
           title: 'SMT Task',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: SplashScreen(),
+          home: child,
           initialRoute: RouteNames.splashScreen,
           getPages: AppRoutes.routes,
           initialBinding: StateControllerBinder(),
         );
       },
+      child: SplashScreen(),
     );
   }
 }
