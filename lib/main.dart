@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'core/models/post_model.dart';
-import 'core/services/cache_service.dart';
 import 'my_app.dart';
 
 void main() async {
@@ -13,9 +12,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(PostAdapter());
   // // await Hive.openBox("postsCache");
-  await CacheService.cacheService.init();
-
-
+  // await CacheService.instance.init();
 
   runApp(const MyApp());
 }

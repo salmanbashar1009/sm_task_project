@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +12,7 @@ class PostController extends GetxController {
   final RxBool isLoading = true.obs;
   final RxBool isOffline = false.obs;
   final RxBool hasError = false.obs;
+
 
   final CacheService _cacheService = CacheService.cacheService;
   final Connectivity _connectivity = Connectivity();
@@ -30,7 +29,6 @@ class PostController extends GetxController {
       hasError.value = false;
       isOffline.value = false;
 
-      // final connectivityResult = await _connectivity.checkConnectivity();
       List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
 
       if (!connectivityResult.contains(ConnectivityResult.none)) {
@@ -40,19 +38,16 @@ class PostController extends GetxController {
         );
 
         if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          final fetchedPosts = (data['posts'] as List)
-              .map((e) => Post.fromJson(e))
-              .toList();
-
-          // Cache posts in the main isolate
+          /// Cache in background isolate
           try {
-            await _cacheService.cachePosts(fetchedPosts);
+            await _cacheService.cachePostsInIsolate(response.body);
           } catch (e) {
-            debugPrint('Failed to cache posts: $e');
+            debugPrint('Cache isolate failed: $e');
           }
 
-          posts.assignAll(fetchedPosts);
+          /// Load freshly cached posts
+          final cachedPosts = await _cacheService.getCachedPosts();
+          posts.assignAll(cachedPosts);
         } else {
           throw Exception('Failed to load posts: ${response.statusCode}');
         }
