@@ -6,50 +6,48 @@ import 'package:sm_task_project/core/route_config/route_names.dart';
 import 'package:sm_task_project/presentations/view/splash_screen/splash_screen.dart';
 
 void main() {
-  testWidgets('SplashScreen shows first text widget',
-          (WidgetTester tester) async {
-        // Initialize ScreenUtil with a design size for testing
-        await tester.pumpWidget(
-          ScreenUtilInit(
-            designSize: const Size(360, 690), // Adjust if needed
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, child) {
-              return GetMaterialApp(
-                initialRoute: '/',
-                getPages: [
-                  GetPage(name: '/', page: () => const SplashScreen()),
-                  GetPage(
-                    name: RouteNames.onBoardingScreen,
-                    page: () => const Scaffold(body: Text('Onboarding')),
-                  ),
-                ],
-                home: const SplashScreen(),
-              );
-            },
-          ),
-        );
+  testWidgets('SplashScreen displays UI and navigates after delay', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return GetMaterialApp(
+            initialRoute: '/',
+            getPages: [
+              GetPage(name: '/', page: () => const SplashScreen()),
+              GetPage(
+                name: RouteNames.onBoardingScreen,
+                page: () => const Scaffold(body: Text('Onboarding')),
+              ),
+            ],
+            home: const SplashScreen(),
+          );
+        },
+      ),
+    );
 
-        // Allow the widget tree to build and settle any animations or async operations
-        await tester.pumpAndSettle();
+    // Settle animations and initial build
+    await tester.pumpAndSettle();
 
-        // Debug: Print the widget tree to inspect what's rendered
-        debugDumpApp();
+    // Check for main text
+    expect(find.text('Theory test in my language'), findsOneWidget);
 
-        // Find the text widget by its exact string
-        final firstTextFinder = find.text('Theory test in my language');
+    // Check for description text
+    expect(
+      find.text('I must write the real test will be in English language and this app just helps you to understand the materials in your language'),
+      findsOneWidget,
+    );
 
-        // Check if the text is found
-        if (firstTextFinder.evaluate().isEmpty) {
-          // Debug: List all Text widgets to see what's actually rendered
-          final allTextWidgets = find.byType(Text).evaluate().map((e) => (e.widget as Text).data).toList();
-          debugPrint('Found Text widgets: $allTextWidgets');
-        }
+    // Check for CircularProgressIndicator
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-        // Verify the text is present
-        expect(firstTextFinder, findsOneWidget, reason: 'Expected to find "Theory test in my language" but found none.');
+    // Simulate waiting for navigation delay
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
 
-        // Fast-forward to allow delayed animations or navigation (e.g., Future.delayed)
-        await tester.pump(const Duration(seconds: 5));
-      });
+    // Verify navigation to onboarding screen
+    expect(find.text('Onboarding'), findsOneWidget);
+  });
 }
