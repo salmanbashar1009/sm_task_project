@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           initialBinding: StateControllerBinder(),
         );
       },
-      child: SplashScreen(),
+      child: const SplashScreen(),
     );
   }
 }
